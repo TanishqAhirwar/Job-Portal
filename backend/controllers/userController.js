@@ -1,5 +1,6 @@
 import { User } from "../models/userModel.js";
 import bcrypt from 'bcrypt';
+import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
   try {
@@ -50,7 +51,7 @@ export const login = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email });
+    let user = await User.findOne({ email });
     if (!user) {
       return res.status(400).jsom({
         message: "Incorrect email or Password",
