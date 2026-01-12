@@ -1,5 +1,5 @@
 import { User } from "../models/userModel.js";
-import bcrypt from 'bcrypt';
+import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
 export const register = async (req, res) => {
@@ -121,11 +121,14 @@ export const logout = async (req, res) => {
 export const updateProfile = async (req, res) => {
   try {
     const { fullname, email, phoneNumber, bio, skills } = req.body;
-    const file = req.file;
-    
+    // const file = req.file;
+
     //cloudinary ayega idhar
 
-    const skillsArray = skills.split(",");
+    let skillsArray;
+    if (skills) {
+      skillsArray = skills.split(",");
+    }
     const userId = req.id; // middileware Authentication
     let user = await User.findById(userId);
 
@@ -137,11 +140,11 @@ export const updateProfile = async (req, res) => {
     }
 
     // Updating data
-    if(fullname) user.fullname = fullname
-    if(email) user.email = email
-    if(phoneNumber) user.phoneNumber = phoneNumber
-    if(bio) user.profile.bio = bio
-    if(skills) user.profile.skills = skillsArray
+    if (fullname) user.fullname = fullname;
+    if (email) user.email = email;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (bio) user.profile.bio = bio;
+    if (skills) user.profile.skills = skillsArray;
 
     // resume comes later here.....
 
@@ -157,11 +160,10 @@ export const updateProfile = async (req, res) => {
     };
 
     return res.status(200).json({
-      message:"Profile updated Successfully",
+      message: "Profile updated Successfully",
       user,
-      success:true
+      success: true,
     });
-    
   } catch (error) {
     console.log(error);
   }
