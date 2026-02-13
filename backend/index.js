@@ -4,6 +4,8 @@ import cookieParser from "cookie-parser";
 import cors from "cors";
 import connectDB from "./utils/dbConnect.js";
 import userRoutes from "./routes/userRoutes.js";
+import companyRoute from "./routes/companyRoutes.js";
+import jobRoute from "./routes/jobRoutes.js";
 
 dotenv.config({})
 
@@ -18,9 +20,10 @@ app.use(cors({
   credentials: true
 }));
 
-
 // routes
 app.use("/api/v1/user", userRoutes);
+app.use("/api/v1/company", companyRoute);
+app.use("/api/v1/job", jobRoute);
 
 connectDB()
 .then(() => {
